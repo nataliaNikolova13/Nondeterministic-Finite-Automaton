@@ -1,13 +1,17 @@
 #include <iostream>
-#include "prehod.h"
+#include "automat.h"
 
 int main(){
-    State* state = new State("one");
-    State* st = new State("two");
+    State state ("one");
+    State st ("two");
+    State sta ("three");
     // state.printState();
     Prehod prehod(state, st, 'a');
-    prehod.printPrehod();
-    delete state;
-    delete st;
+    Prehod pr(state, sta, 'b');
+    // prehod.printPrehod();
+    Automat automat;
+    automat.addPrehod(prehod);
+    automat.addPrehod(pr);
+    automat.printAutomat();
     return 0;
 }

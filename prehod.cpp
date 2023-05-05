@@ -7,7 +7,7 @@ Prehod::Prehod(){
     this->letter = '-';
 }
 
-Prehod::Prehod(State* from, State* to, char letter){
+Prehod::Prehod(State from, State to, char letter){
     this->from = from;
     this->to = to;
     this->letter = letter;
@@ -28,12 +28,24 @@ Prehod& Prehod::operator=(const Prehod& other){
     return *this;
 }
 
+State Prehod::getTo() const{
+    return this->to;
+}
+
+State Prehod::getFrom() const{
+    return this->from;
+}
+
+char Prehod::getLetter() const{
+    return this->letter;
+}
+
 void Prehod::printPrehod(){
-    std::cout<<this->to->getNameState()<<" => "<<this->from->getNameState()<<" with "<<this->letter<<std::endl;
+    std::cout<<this->to.getNameState()<<" => "<<this->from.getNameState()<<" with "<<this->letter<<std::endl;
 }
 
 void Prehod::readPrehodFromFile(){
-    // std::
+    // std::ifstream file
     /*
     std::ifstream dadJokes("dadJokes.txt"); 
 
