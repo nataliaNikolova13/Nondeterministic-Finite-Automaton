@@ -1,8 +1,13 @@
 #include <iostream>
-#include "state.h"
+#include "prehod.h"
 
 int main(){
-    State state("one");
-    state.printState();
+    State* state = new State("one");
+    State* st = new State("two");
+    // state.printState();
+    Prehod prehod(state, st, 'a');
+    prehod.printPrehod();
+    delete state;
+    delete st;
     return 0;
 }
