@@ -9,20 +9,18 @@ static int idsTaken = 0;
 class Automat{
     private:
         unsigned int id;
-        // char* nameAutomat;
         State* allStates;
         char** adjMatrix;
-
         unsigned int size;
-        // unsigned int capasity;
-
+        char* name;
+      
         void clear();
-        // void clearMatrix();
         void copy(const Automat& other);
-        // void copyMatrix();
         void resize();
-        // void resizeMatrix();
     public:
+
+        static bool isOpened;
+        static bool isSaved;
 
         Automat();
         Automat(const Automat& other);
@@ -36,4 +34,8 @@ class Automat{
         int positionofState(const State& state);
         bool isValid();
         void printMatrix();
+        State& getFirstState() const;
+        const char* getName() const;
+        int getId() const;
+        //кои са финалните състояния?
 };

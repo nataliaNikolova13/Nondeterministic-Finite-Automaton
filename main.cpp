@@ -1,5 +1,7 @@
 #include <iostream>
-#include "automat.h"
+// #include "automat.h"
+// #include "allAutomats.h"
+#include "operationClass.h"
 
 int main(){
     State state ("one");
@@ -21,5 +23,14 @@ int main(){
     Automat fromFile;
     fromFile.readAuthomatFromFile("automat.txt");
     fromFile.printMatrix();
+
+    Catalog catalog;
+    catalog.addAutomat(automat);
+    catalog.addAutomat(fromFile);
+    catalog.print();
+
+    // OperationClass operationClass;
+    // operationClass.list();
+    // allAutomats.spp operationClass.cpp
     return 0;
 }

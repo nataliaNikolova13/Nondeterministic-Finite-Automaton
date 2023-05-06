@@ -29,12 +29,24 @@ void Automat::copy(const Automat& other){
 
     this->size = other.size;
 
+    this->name = new (std::nothrow) char[strlen(other.name) + 1];
+    strcpy(this->name, other.name);
+
     // this->nameAutomat = new (std::nothrow) char[strlen(other.nameAutomat) + 1];
     // strcpy(this->nameAutomat, other.nameAutomat);
 }
 
 Automat::~Automat(){
     this->clear();
+    delete[] this->name;
+}
+
+const char* Automat::getName() const{
+    return this->name;
+}
+
+int Automat::getId() const{
+    return this->id;
 }
 
 void Automat::resize(){
@@ -70,6 +82,7 @@ Automat::Automat(){
     this->size = 0;
     this->id = idsTaken;
     idsTaken++;
+    this->name = nullptr;
 }
 
 Automat::Automat(const Automat& other){
@@ -79,9 +92,12 @@ Automat::Automat(const Automat& other){
 }
 
 Automat& Automat::operator= (const Automat& other){
+    std::cout<<"copy";
     if(this!=&other){
         this->clear();
+        delete[] this->name;
         this->copy(other);
+        std::cout<<"ggrrtg";
     }
     return *this;
 }
@@ -164,6 +180,8 @@ void Automat::printMatrix(){
 }
 
 void Automat::readAuthomatFromFile(const char* nameFile){
+    this->name = new (std::nothrow) char[strlen(nameFile) + 1];
+    strcpy(this->name, nameFile);
     std::ifstream file (nameFile);
     if(!file.is_open()){
         throw "Problem";
@@ -190,6 +208,10 @@ void Automat::readAuthomatFromFile(const char* nameFile){
         }
     }
     file.close();
+}
+
+State& Automat::getFirstState() const{
+    return this->allStates[0];
 }
 
 /*
