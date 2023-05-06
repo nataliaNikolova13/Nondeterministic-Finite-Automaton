@@ -2,6 +2,7 @@
 #include "state.h"
 #include "prehod.h"
 #include <cstring>
+#include <iostream>
 
 static int idsTaken = 0;
 

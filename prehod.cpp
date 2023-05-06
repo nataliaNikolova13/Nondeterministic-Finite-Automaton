@@ -41,7 +41,7 @@ char Prehod::getLetter() const{
 }
 
 void Prehod::printPrehod(){
-    std::cout<<this->to.getNameState()<<" => "<<this->from.getNameState()<<" with "<<this->letter<<std::endl;
+    std::cout<<this->from.getNameState()<<" => "<<this->to.getNameState()<<" with "<<this->letter<<std::endl;
 }
 
 void Prehod::readPrehodFromFile(){

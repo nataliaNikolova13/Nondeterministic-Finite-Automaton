@@ -38,12 +38,18 @@ Automat::~Automat(){
 }
 
 void Automat::resize(){
+    if(this->size==0){
+        this->allStates = new (std::nothrow) State[1];
+        this->adjMatrix = new (std::nothrow) char*[1];
+        this->adjMatrix[0] = new (std::nothrow) char[1];
+        this->size++;
+    }else{
     State* tempStates = new (std::nothrow) State[this->size + 1];
     for(unsigned int i = 0; i < this->size; i++){
         tempStates[i] = this->allStates[i];
     }
     char** tempMatrix = new (std::nothrow) char*[this->size + 1];
-    for(unsigned int j = 0; j <= this->size; j++){
+    for(unsigned int j = 0; j < this->size + 1; j++){
         tempMatrix[j] = new (std::nothrow) char[this->size + 1];
     }
     for(unsigned int i = 0; i < this->size; i++){
@@ -51,10 +57,11 @@ void Automat::resize(){
             tempMatrix[i][j] = this->adjMatrix[i][j];
         }
     }
-    this->size++;
     this->clear();
+    this->size++;
     this->allStates = tempStates;
     this->adjMatrix = tempMatrix;
+    }
 }
 
 Automat::Automat(){
@@ -100,14 +107,13 @@ int Automat::positionofState(const State& state){
 void Automat::addPrehod(const Prehod& prehod){
     if(!isStateInAutomat(prehod.getFrom())){
         this->resize();
-        this->allStates[this->size] = prehod.getFrom();
-        //fill empty spaces
+        this->allStates[this->size-1] = prehod.getFrom();
         for(unsigned int i = 0; i < this->size; i++){
             for(unsigned int j = 0; j < this->size; j++){
                 if(j == this->size - 1){
                     this->adjMatrix[i][j] = noPrehod;
                 }
-                if(i == this->size - 1){
+                else if(i == this->size - 1){
                     this->adjMatrix[i][j] = noPrehod;
                 }
             }
@@ -115,8 +121,7 @@ void Automat::addPrehod(const Prehod& prehod){
     }
     if(!isStateInAutomat(prehod.getTo())){
         this->resize();
-        this->allStates[this->size] = prehod.getTo();
-        //fill empty spaces
+        this->allStates[this->size-1] = prehod.getTo();
         for(unsigned int i = 0; i < this->size; i++){
             for(unsigned int j = 0; j < this->size; j++){
                 if(j == this->size - 1){
@@ -144,7 +149,7 @@ void Automat::printAutomat(){
             if(this->adjMatrix[i][j] != noPrehod){
                 Prehod pr(this->allStates[i], this->allStates[j], this->adjMatrix[i][j]);
                 pr.printPrehod();
-                std::cout<<std::endl;
+                // std::cout<<std::endl;
             }
         }
     }
