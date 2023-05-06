@@ -155,6 +155,43 @@ void Automat::printAutomat(){
     }
 }
 
+void Automat::printMatrix(){
+    for(unsigned int i = 0; i < this->size; i++){
+        for(unsigned int j = 0; j < this->size; j++){
+            std::cout<<this->adjMatrix[i][j];
+        }
+        std::cout<<std::endl;}
+}
+
+void Automat::readAuthomatFromFile(const char* nameFile){
+    std::ifstream file (nameFile);
+    if(!file.is_open()){
+        throw "Problem";
+        return;
+    }
+    char temp[100];
+    int counter = 0;
+    State from;
+    State to;
+    while(!file.eof()){
+        file >> temp;
+        if(counter == 0){
+            from = State(temp);
+            counter++;
+        }else if(counter == 2){
+            to = State(temp);
+            counter++;
+        }else if(counter == 4){
+            Prehod prehod (from, to, temp[0]);
+            this->addPrehod(prehod);
+            counter = 0;
+        }else{
+            counter++;
+        }
+    }
+    file.close();
+}
+
 /*
         тоест, че има път от нач състояние до всяко друго
         bool isValid();

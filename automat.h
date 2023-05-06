@@ -30,10 +30,10 @@ class Automat{
         Automat& operator= (const Automat& other);
         void addPrehod(const Prehod& prehod);
         void printAutomat();
-        void readAuthomatFromFile();
+        void readAuthomatFromFile(const char* nameFile);
         void printAutomatInFile();
         bool isStateInAutomat(const State& state);
         int positionofState(const State& state);
         bool isValid();
-
+        void printMatrix();
 };
