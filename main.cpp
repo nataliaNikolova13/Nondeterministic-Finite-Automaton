@@ -14,8 +14,10 @@ int main(){
     Prehod three(four, st, 'b');
     // prehod.printPrehod();
     Automat automat;
+    // std::cout<<automat.getId();
     automat.addPrehod(prehod);
     automat.addPrehod(pr);
+    // std::cout<<automat.getId();
     automat.addPrehod(three);
     automat.printAutomat();
     // automat.printMatrix();

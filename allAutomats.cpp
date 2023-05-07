@@ -50,19 +50,19 @@ void Catalog::resize(){
 }
 
 void Catalog::addAutomat(const Automat& automat){
-    std::cout<<"b";
+    // std::cout<<"b";
     if(this->size == this->capacity){
-        std::cout<<"z";
+        // std::cout<<"z";
         this->resize();
     }
-    std::cout<<this->size;
+    // std::cout<<this->size;
     
    
     this->allAutomats[this->size] = automat;
-    std::cout<<this->size;
+    // std::cout<<this->size;
     this->size = this->size + 1;
-    std::cout<<this->size;
-    std::cout<<"e";
+    // std::cout<<this->size;
+    // std::cout<<"xxxxx";
     // this->size++;
     
 }
@@ -72,11 +72,15 @@ int Catalog::getSize() const{
 }
 
 const Automat* Catalog::getAllAutomats() const{
+    // std::cout<<"yyyy";
     return this->allAutomats;
 }
 
 void Catalog::print(){
+    // std::cout<<this->size;
     for(std::size_t i = 0; i < this->size; i++){
-        std::cout<<this->allAutomats[i].getName();
+        // std::cout<<"a";
+        std::cout<<this->getAllAutomats()[i].getId()<<" - "<<this->getAllAutomats()[i].getName()<<std::endl;
+        // std::cout<<"b";
     }
 }

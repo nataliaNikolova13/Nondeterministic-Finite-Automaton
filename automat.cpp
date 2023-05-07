@@ -12,25 +12,42 @@ void Automat::clear(){
 }
 
 void Automat::copy(const Automat& other){
+    // std::cout<<"a";
     this->allStates = new (std::nothrow) State[other.size];
     for(unsigned int i = 0; i < other.size; i++){
         this->allStates[i] = other.allStates[i];
     }
+    // std::cout<<"b";
     this->adjMatrix = new (std::nothrow) char*[other.size];
     for(unsigned int j = 0; j < other.size; j++){
         this->adjMatrix[j] = new (std::nothrow) char[other.size];
     }
+    // std::cout<<"c";
 
     for(unsigned int i = 0; i < other.size; i++){
         for(unsigned int j = 0; j < other.size; j++){
             this->adjMatrix[i][j] = other.adjMatrix[i][j];
         }
     }
+    // std::cout<<"d";
 
     this->size = other.size;
+    // std::cout<<"e";
 
-    this->name = new (std::nothrow) char[strlen(other.name) + 1];
-    strcpy(this->name, other.name);
+    if(other.name == nullptr){
+        this->name = nullptr;
+        // std::cout<<"fgggg";
+    }else{
+        this->name = new (std::nothrow) char[strlen(other.name) + 1];
+        if(!this->name){
+            throw "Memory problem";
+            return;
+        }
+        // std::cout<<"f";
+        strcpy(this->name, other.name);
+        // std::cout<<"g";
+    }
+    
 
     // this->nameAutomat = new (std::nothrow) char[strlen(other.nameAutomat) + 1];
     // strcpy(this->nameAutomat, other.nameAutomat);
@@ -42,10 +59,12 @@ Automat::~Automat(){
 }
 
 const char* Automat::getName() const{
+    // std::cout<<"x";
     return this->name;
 }
 
 int Automat::getId() const{
+    // std::cout<<"id";
     return this->id;
 }
 
@@ -82,7 +101,8 @@ Automat::Automat(){
     this->size = 0;
     this->id = idsTaken;
     idsTaken++;
-    this->name = nullptr;
+    this->name = new (std::nothrow) char[13];
+    strcpy(this->name, "Unknown name");
 }
 
 Automat::Automat(const Automat& other){
@@ -92,12 +112,14 @@ Automat::Automat(const Automat& other){
 }
 
 Automat& Automat::operator= (const Automat& other){
-    std::cout<<"copy";
+    // std::cout<<"copy";
     if(this!=&other){
         this->clear();
+        // std::cout<<"clear";
         delete[] this->name;
+        // std::cout<<"name";
         this->copy(other);
-        std::cout<<"ggrrtg";
+        // std::cout<<"ggrrtg";
     }
     return *this;
 }
@@ -180,6 +202,7 @@ void Automat::printMatrix(){
 }
 
 void Automat::readAuthomatFromFile(const char* nameFile){
+    delete[] this->name;
     this->name = new (std::nothrow) char[strlen(nameFile) + 1];
     strcpy(this->name, nameFile);
     std::ifstream file (nameFile);

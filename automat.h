@@ -4,11 +4,11 @@
 #include <cstring>
 #include <iostream>
 
-static int idsTaken = 0;
+static unsigned int idsTaken = 4;
 
 class Automat{
     private:
-        unsigned int id;
+        int id;
         State* allStates;
         char** adjMatrix;
         unsigned int size;
