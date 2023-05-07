@@ -1,4 +1,5 @@
-one => two with a
-one => three with b
-four => two with b
-FinalStates: three four 
+five => six with a
+five => seven with b
+five => eight with b
+eight => six with b
+FinalStates: seven eight 

@@ -80,17 +80,29 @@ void Catalog::list(){
     // std::cout<<this->size;
     for(std::size_t i = 0; i < this->size; i++){
         // std::cout<<"a";
-        std::cout<<this->getAllAutomats()[i].getId()<<" - "<<this->getAllAutomats()[i].getName()<<std::endl;
+        std::cout<<i+1<<" - "<<this->getAllAutomats()[i].getName()<<std::endl;
         // std::cout<<"b";
     }
 }
 
 void Catalog::printAutomatById(int id){
+    // for(std::size_t i = 0; i < this->size; i++){
+    //     if(this->allAutomats[i].getId() == id){
+    //         this->allAutomats[i].printAutomat();
+    //         this->allAutomats[i].printMatrix();
+    //     }
+    // }
+    this->allAutomats[id].printAutomat();
+    this->allAutomats[id].printMatrix();
+}
+
+int Catalog::getId(const Automat& automat) const{
     for(std::size_t i = 0; i < this->size; i++){
-        if(this->allAutomats[i].getId() == id){
-            this->allAutomats[i].printAutomat();
-            this->allAutomats[i].printMatrix();
+        if(strcmp(this->allAutomats[i].getName(), automat.getName()) == 0){
+            return i;
         }
     }
-
+    return -1;
 }
+
+

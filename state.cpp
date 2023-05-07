@@ -61,4 +61,7 @@ void State::makeFinal(){
     this->isFinal = true;
 }
 
+void State::makeNotFinal(){
+    this->isFinal = false;
+}
 //void State::printStateInFile();

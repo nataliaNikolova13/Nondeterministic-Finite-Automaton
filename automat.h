@@ -4,11 +4,11 @@
 #include <cstring>
 #include <iostream>
 
-static unsigned int idsTaken = -1;
+// static unsigned int idsTaken = -1;
 
 class Automat{
     private:
-        int id;
+        // int id;
         State* allStates;
         char** adjMatrix;
         unsigned int size;
@@ -35,7 +35,9 @@ class Automat{
         bool isValid();
         void printMatrix();
         State& getFirstState() const;
-        const char* getName() const;
-        int getId() const;
+        char* getName() const;
+        // int getId() const;
+        int getSize() const;
+        void concatenate(const Automat& first, const Automat& second);
         //кои са финалните състояния?
 };

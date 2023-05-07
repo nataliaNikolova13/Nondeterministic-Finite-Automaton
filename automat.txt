@@ -2,3 +2,4 @@ one => two with a
 two => three with b
 two => two with a
 three => four with b
+FinalStates: two 

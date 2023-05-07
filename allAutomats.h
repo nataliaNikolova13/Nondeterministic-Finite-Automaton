@@ -21,4 +21,6 @@ class Catalog{
         const Automat* getAllAutomats() const;
         void list();
         void printAutomatById(int id);
+        int getId(const Automat& automat) const;
+        // void concatenate(const Automat& first, const Automat& second);
 };

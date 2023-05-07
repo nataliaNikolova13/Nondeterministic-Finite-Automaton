@@ -19,4 +19,5 @@ class State{
         void printStateInFile();
         bool isStateFinal() const;
         void makeFinal();
+        void makeNotFinal();
 };

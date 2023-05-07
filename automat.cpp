@@ -53,15 +53,15 @@ Automat::~Automat(){
     delete[] this->name;
 }
 
-const char* Automat::getName() const{
+char* Automat::getName() const{
     // std::cout<<"x";
     return this->name;
 }
 
-int Automat::getId() const{
-    // std::cout<<"id";
-    return this->id;
-}
+// int Automat::getId() const{
+//     // std::cout<<"id";
+//     return this->id;
+// }
 
 void Automat::resize(){
     if(this->size==0){
@@ -78,9 +78,15 @@ void Automat::resize(){
     for(unsigned int j = 0; j < this->size + 1; j++){
         tempMatrix[j] = new (std::nothrow) char[this->size + 1];
     }
-    for(unsigned int i = 0; i < this->size; i++){
-        for(unsigned int j = 0; j < this->size; j++){
-            tempMatrix[i][j] = this->adjMatrix[i][j];
+    for(unsigned int i = 0; i < this->size +1; i++){
+        for(unsigned int j = 0; j < this->size + 1; j++){
+            if(i ==this->size || j == this->size){
+                tempMatrix[i][j] = noPrehod;
+                // std::cout<<"u";
+            }else{
+                tempMatrix[i][j] = this->adjMatrix[i][j];
+            }
+            
         }
     }
     this->clear();
@@ -94,16 +100,16 @@ Automat::Automat(){
     this->allStates = nullptr;
     this->adjMatrix = nullptr;
     this->size = 0;
-    this->id = idsTaken;
-    idsTaken++;
+    // this->id = idsTaken;
+    // idsTaken++;
     this->name = new (std::nothrow) char[17];
     strcpy(this->name, "Unknown_name.txt");
 }
 
 Automat::Automat(const Automat& other){
     this->copy(other);
-    this->id = idsTaken;
-    idsTaken++;
+    // this->id = idsTaken;
+    // idsTaken++;
 }
 
 Automat& Automat::operator= (const Automat& other){
@@ -211,7 +217,12 @@ void Automat::readAuthomatFromFile(const char* nameFile){
     State to;
     while(!file.eof()){
         file >> temp;
-        if(counter == 0){
+        // std::cout<<temp<<std::endl;
+        if(temp[0] == 'F' && temp[1] == 'i' && temp[2] == 'n'){
+            counter = -1;
+            // std::cout<<"m";
+        }
+        else if(counter == 0){
             from = State(temp, false);
             counter++;
         }else if(counter == 2){
@@ -221,9 +232,9 @@ void Automat::readAuthomatFromFile(const char* nameFile){
             Prehod prehod (from, to, temp[0]);
             this->addPrehod(prehod);
             counter = 0;
-        }else if(strcmp(temp, "FinalStates:")){
-            counter = -1;
+            // std::cout<<"f";
         }else if(counter == -1){
+            // std::cout<<"l";
             int pos = this->positionofState(State(temp, true));
             this->allStates[pos].makeFinal();
         }
@@ -264,6 +275,54 @@ void Automat::printAutomatInFile(){
         }
     }
     file.close();
+}
+
+int Automat::getSize() const{
+    return this->size;
+}
+
+void Automat::concatenate(const Automat& first, const Automat& second){
+    this->copy(first);
+
+    for(int i = 0; i < second.getSize(); i++){
+
+        this->resize();
+        this->allStates[i + first.getSize()] = second.allStates[i];
+        }
+
+    for(int i = 0; i < second.getSize(); i++){
+        for(int j = 0; j < second.getSize(); j++){
+            if(second.adjMatrix[i][j] != '*'){
+                this->adjMatrix[first.getSize()+i][first.getSize()+j] = second.adjMatrix[i][j];
+            }
+        }
+    }
+    for(int i = 0; i < first.getSize(); i++){
+        if(first.allStates[i].isStateFinal()){
+            // std::cout<<i<<std::endl;
+            Prehod temp(first.allStates[i], second.getFirstState(), epsilonPrehod);
+            this-> addPrehod(temp);
+            first.allStates[i].makeNotFinal();
+        }
+    }
+    // this->id = idsTaken;
+    // idsTaken++;
+    char buffer[100];
+    strcpy(buffer, "concat");
+    strcat(buffer, "_");
+    strcat(buffer, first.getName());
+    strcat(buffer, "_");
+    strcat(buffer, second.getName());
+    delete[] this->name;
+    this->name = nullptr;
+    this->name = new (std::nothrow) char[strlen(buffer) + 1];
+    strcpy(this->name, buffer);
+    
+    // strcat(this->name, "_");
+    // strcat(this->name, "concat");
+    // std::cout<<"g";
+    this->size = first.getSize() + second.getSize();
+    // std::cout<<"h"<<std::endl;
 }
 
 /*

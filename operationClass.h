@@ -4,9 +4,9 @@
 
 class OperationClass{
     private:
-        Catalog catalog;
+        // Catalog catalog;
         // OperationClass(){};
-        void clear();
+        // void clear();
     public:
         OperationClass(){};
         OperationClass(const OperationClass& operationClass) = delete;
@@ -18,5 +18,6 @@ class OperationClass{
             return operationClass;
         }
 
-        void list();
+        void listt(Catalog& catalog);
+        void start();
 };
