@@ -96,8 +96,8 @@ Automat::Automat(){
     this->size = 0;
     this->id = idsTaken;
     idsTaken++;
-    this->name = new (std::nothrow) char[13];
-    strcpy(this->name, "Unknown name");
+    this->name = new (std::nothrow) char[17];
+    strcpy(this->name, "Unknown_name.txt");
 }
 
 Automat::Automat(const Automat& other){
@@ -230,6 +230,26 @@ void Automat::readAuthomatFromFile(const char* nameFile){
 
 State& Automat::getFirstState() const{
     return this->allStates[0];
+}
+
+void Automat::printAutomatInFile(){
+    std::ofstream file(this->name);
+    if(!file.is_open()){
+        throw "Memory problem";
+        return;
+    }
+    // file<<
+    for(unsigned int i = 0; i < this->size; i++){
+        for(unsigned int j = 0; j < this->size; j++){
+            if(this->adjMatrix[i][j] != noPrehod){
+                Prehod pr(this->allStates[i], this->allStates[j], this->adjMatrix[i][j]);
+                // pr.printPrehod();
+                // std::cout<<std::endl;
+                file<<pr.getFrom().getNameState()<<" => "<<pr.getTo().getNameState()<<" with "<<pr.getLetter()<<"\n";
+            }
+        }
+    }
+    file.close();
 }
 
 /*

@@ -19,18 +19,19 @@ int main(){
     automat.addPrehod(pr);
     // std::cout<<automat.getId();
     automat.addPrehod(three);
-    automat.printAutomat();
+    // automat.printAutomat();
     // automat.printMatrix();
+    automat.printAutomatInFile();
 
     Automat fromFile;
     fromFile.readAuthomatFromFile("automat.txt");
-    fromFile.printMatrix();
+    // fromFile.printMatrix();
 
     Catalog catalog;
     catalog.addAutomat(automat);
     catalog.addAutomat(fromFile);
-    catalog.print();
-
+    catalog.list();
+    catalog.printAutomatById(2);
     // OperationClass operationClass;
     // operationClass.list();
     // allAutomats.spp operationClass.cpp

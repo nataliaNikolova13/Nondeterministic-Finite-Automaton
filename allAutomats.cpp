@@ -76,11 +76,21 @@ const Automat* Catalog::getAllAutomats() const{
     return this->allAutomats;
 }
 
-void Catalog::print(){
+void Catalog::list(){
     // std::cout<<this->size;
     for(std::size_t i = 0; i < this->size; i++){
         // std::cout<<"a";
         std::cout<<this->getAllAutomats()[i].getId()<<" - "<<this->getAllAutomats()[i].getName()<<std::endl;
         // std::cout<<"b";
     }
+}
+
+void Catalog::printAutomatById(int id){
+    for(std::size_t i = 0; i < this->size; i++){
+        if(this->allAutomats[i].getId() == id){
+            this->allAutomats[i].printAutomat();
+            this->allAutomats[i].printMatrix();
+        }
+    }
+
 }

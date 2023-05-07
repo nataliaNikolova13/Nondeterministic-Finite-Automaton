@@ -19,5 +19,6 @@ class Catalog{
         void addAutomat(const Automat& automat);
         int getSize() const;
         const Automat* getAllAutomats() const;
-        void print();
+        void list();
+        void printAutomatById(int id);
 };
