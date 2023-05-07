@@ -2,15 +2,17 @@
 
 State::State(){
     this->name = nullptr;
+    this->isFinal = false;
 }
 
-State::State(const char* name){
+State::State(const char* name, bool isFinal){
     this->name = new (std::nothrow) char[strlen(name) + 1];
     if(!this->name){
         throw "Memory problem - state";
         return;
     }
     strcpy(this->name, name);
+    this->isFinal = isFinal;
 }
 
 void State::clear(){
@@ -28,6 +30,7 @@ void State::copy(const State& other){
         return;
     }
     strcpy(this->name, other.name);
+    this->isFinal = other.isFinal;
 }
 
 State::State(const State& other){
@@ -49,3 +52,13 @@ const char* State::getNameState() const{
 void State::printState(){
     std::cout<<this->name;
 }
+
+bool State::isStateFinal() const{
+    return this->isFinal;
+}
+
+void State::makeFinal(){
+    this->isFinal = true;
+}
+
+//void State::printStateInFile();

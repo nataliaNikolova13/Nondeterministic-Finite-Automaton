@@ -212,16 +212,22 @@ void Automat::readAuthomatFromFile(const char* nameFile){
     while(!file.eof()){
         file >> temp;
         if(counter == 0){
-            from = State(temp);
+            from = State(temp, false);
             counter++;
         }else if(counter == 2){
-            to = State(temp);
+            to = State(temp, false);
             counter++;
         }else if(counter == 4){
             Prehod prehod (from, to, temp[0]);
             this->addPrehod(prehod);
             counter = 0;
-        }else{
+        }else if(strcmp(temp, "FinalStates:")){
+            counter = -1;
+        }else if(counter == -1){
+            int pos = this->positionofState(State(temp, true));
+            this->allStates[pos].makeFinal();
+        }
+        else{
             counter++;
         }
     }
@@ -247,6 +253,14 @@ void Automat::printAutomatInFile(){
                 // std::cout<<std::endl;
                 file<<pr.getFrom().getNameState()<<" => "<<pr.getTo().getNameState()<<" with "<<pr.getLetter()<<"\n";
             }
+        }
+    }
+    file<<"FinalStates: ";
+    
+    for(unsigned int i = 0; i < this->size; i++){
+        
+        if(this->allStates[i].isStateFinal()){
+            file<<this->allStates[i].getNameState()<<" ";
         }
     }
     file.close();

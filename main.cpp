@@ -4,10 +4,10 @@
 #include "operationClass.h"
 
 int main(){
-    State state ("one");
-    State st ("two");
-    State sta ("three");
-    State four ("four");
+    State state ("one", false);
+    State st ("two", false);
+    State sta ("three", true);
+    State four ("four", true);
     // state.printState();
     Prehod prehod(state, st, 'a');
     Prehod pr(state, sta, 'b');

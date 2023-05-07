@@ -2,8 +2,8 @@
 #include <fstream>
 
 Prehod::Prehod(){
-    this->to = nullptr;
-    this->from = nullptr;
+    this->to = State(nullptr, false);
+    this->from = State(nullptr, false);
     this->letter = '-';
 }
 
