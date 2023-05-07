@@ -4,7 +4,7 @@
 #include <cstring>
 #include <iostream>
 
-static unsigned int idsTaken = 4;
+static unsigned int idsTaken = -1;
 
 class Automat{
     private:

@@ -43,14 +43,9 @@ void Automat::copy(const Automat& other){
             throw "Memory problem";
             return;
         }
-        // std::cout<<"f";
         strcpy(this->name, other.name);
-        // std::cout<<"g";
     }
     
-
-    // this->nameAutomat = new (std::nothrow) char[strlen(other.nameAutomat) + 1];
-    // strcpy(this->nameAutomat, other.nameAutomat);
 }
 
 Automat::~Automat(){
