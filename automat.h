@@ -39,5 +39,6 @@ class Automat{
         // int getId() const;
         int getSize() const;
         void concatenate(const Automat& first, const Automat& second);
+        void unite(const Automat& first, const Automat& second);
         //кои са финалните състояния?
 };

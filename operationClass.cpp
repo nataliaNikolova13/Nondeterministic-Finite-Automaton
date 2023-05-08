@@ -47,11 +47,17 @@ void OperationClass::start(){
     // std::cout<<"-----"<<std::endl;
     // catalog.printAutomatById(1);
 
-    Automat concat;
-    concat.concatenate(fromFile, automat);
-    catalog.addAutomat(concat);
-    catalog.list();
+    // Automat concat;
+    // concat.concatenate(fromFile, automat);
+    // catalog.addAutomat(concat);
+    // catalog.list();
     // concat.printAutomat();
     // concat.printMatrix();
+
+    Automat un;
+    un.unite(fromFile, automat);
+    // un.printMatrix();
+    catalog.addAutomat(un);
+    catalog.list();
 }
 

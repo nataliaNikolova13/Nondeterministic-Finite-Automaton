@@ -317,12 +317,59 @@ void Automat::concatenate(const Automat& first, const Automat& second){
     this->name = nullptr;
     this->name = new (std::nothrow) char[strlen(buffer) + 1];
     strcpy(this->name, buffer);
-    
-    // strcat(this->name, "_");
-    // strcat(this->name, "concat");
-    // std::cout<<"g";
     this->size = first.getSize() + second.getSize();
-    // std::cout<<"h"<<std::endl;
+}
+
+void Automat::unite(const Automat& first, const Automat& second){
+    State start("start", false);
+    Prehod toFirst(start, State("nextToStart_F", false), epsilonPrehod);
+    this->addPrehod(toFirst);
+
+    for(int i = 0; i < first.getSize(); i++){
+        this->resize();
+        this->allStates[i+2] = first.allStates[i];
+        }
+    for(int i = 0; i < first.getSize(); i++){
+        for(int j = 0; j < first.getSize(); j++){
+            if(first.adjMatrix[i][j] != '*'){
+                this->adjMatrix[2+i][2+j] = first.adjMatrix[i][j];
+            }
+        }
+        }
+    Prehod fix(this->allStates[1], this->allStates[2], epsilonPrehod);
+    this->addPrehod(fix);
+
+    Prehod toSecond(start, State("nextToStart_S", false), epsilonPrehod);
+    this->addPrehod(toSecond);
+    // this->printMatrix();
+    // std::cout<<this->size<<std::endl;
+    int s = this->size;
+
+    for(int i = 0; i < second.getSize(); i++){
+        this->resize();
+        this->allStates[i + s] = first.allStates[i];
+        }
+
+    for(int i = 0; i < second.getSize(); i++){
+        for(int j = 0; j < second.getSize(); j++){
+            if(second.adjMatrix[i][j] != '*'){
+                this->adjMatrix[s+i][s+j] = second.adjMatrix[i][j];
+            }
+        }
+        }
+    Prehod fix2(this->allStates[s-1], this->allStates[s], epsilonPrehod);
+    this->addPrehod(fix2);
+    char buffer[100];
+    strcpy(buffer, "union");
+    strcat(buffer, "_");
+    strcat(buffer, first.getName());
+    strcat(buffer, "_");
+    strcat(buffer, second.getName());
+    delete[] this->name;
+    this->name = nullptr;
+    this->name = new (std::nothrow) char[strlen(buffer) + 1];
+    strcpy(this->name, buffer);
+    this->size = 3 + first.getSize() + second.getSize();
 }
 
 /*
