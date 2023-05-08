@@ -40,5 +40,6 @@ class Automat{
         int getSize() const;
         void concatenate(const Automat& first, const Automat& second);
         void unite(const Automat& first, const Automat& second);
+        bool isDeterministic();
         //кои са финалните състояния?
 };

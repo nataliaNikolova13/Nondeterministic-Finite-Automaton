@@ -372,6 +372,26 @@ void Automat::unite(const Automat& first, const Automat& second){
     this->size = 3 + first.getSize() + second.getSize();
 }
 
+bool thereAreDuplicates(char* row, int s){
+    for(int i = 0; i < s; i++){
+        for(int j = i+1; j < s; j++){
+            if(row[i] == row[j] && row[i] != noPrehod && row[j] != noPrehod){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool Automat::isDeterministic(){
+    for(std::size_t i = 0; i < this->getSize(); i++){
+        if(thereAreDuplicates(this->adjMatrix[i], this->getSize())){
+            return false;
+        }
+    }
+    return true;
+}
+
 /*
         тоест, че има път от нач състояние до всяко друго
         bool isValid();

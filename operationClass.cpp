@@ -58,6 +58,17 @@ void OperationClass::start(){
     un.unite(fromFile, automat);
     // un.printMatrix();
     catalog.addAutomat(un);
+
+    Automat det;
+    det.readAuthomatFromFile("det.txt");
+    // det.printMatrix();
+    // std::cout<<std::boolalpha<<det.isDeterministic();
+    catalog.addAutomat(det);
+
+    Automat notdet;
+    notdet.readAuthomatFromFile("notdet.txt");
+    // std::cout<<std::boolalpha<<notdet.isDeterministic();
+    catalog.addAutomat(notdet);
     catalog.list();
 }
 
