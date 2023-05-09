@@ -107,7 +107,7 @@ int Catalog::getId(const Automat& automat) const{
 
 int Catalog::getIdByName(const char* name) const{
     for(std::size_t i = 0; i < this->size; i++){
-        if(strcmp(this->allAutomats[i].getName(), name)){
+        if(strcmp(this->allAutomats[i].getName(), name) == 0){
             return i;
         }
     }
@@ -127,3 +127,7 @@ int Catalog::getIdByName(const char* name) const{
 // }
 
 
+void Catalog::removeAutomat(const char* name){
+    std::swap(this->allAutomats[this->getIdByName(name)], this->allAutomats[this->size-1]);
+    --this->size;
+}

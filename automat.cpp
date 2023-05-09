@@ -277,6 +277,34 @@ void Automat::printAutomatInFile(){
     file.close();
 }
 
+void Automat::printAutomatInFileByName(const char* nameFile){
+    std::ofstream file(nameFile);
+    if(!file.is_open()){
+        throw "Memory problem";
+        return;
+    }
+    // file<<
+    for(unsigned int i = 0; i < this->size; i++){
+        for(unsigned int j = 0; j < this->size; j++){
+            if(this->adjMatrix[i][j] != noPrehod){
+                Prehod pr(this->allStates[i], this->allStates[j], this->adjMatrix[i][j]);
+                // pr.printPrehod();
+                // std::cout<<std::endl;
+                file<<pr.getFrom().getNameState()<<" => "<<pr.getTo().getNameState()<<" with "<<pr.getLetter()<<"\n";
+            }
+        }
+    }
+    file<<"FinalStates: ";
+    
+    for(unsigned int i = 0; i < this->size; i++){
+        
+        if(this->allStates[i].isStateFinal()){
+            file<<this->allStates[i].getNameState()<<" ";
+        }
+    }
+    file.close();
+}
+
 int Automat::getSize() const{
     return this->size;
 }
@@ -437,7 +465,7 @@ bool Automat::isWordRecodnised(const char* word){
     int posInAutomat = 0;
     this->isRecognised(word, posInWord, posInAutomat);
     // std::cout<<posInWord;
-    if(posInWord == strlen(word)){
+    if(posInWord == strlen(word) && this->allStates[posInAutomat].isStateFinal() == true){
         return true;
     }
     return false;

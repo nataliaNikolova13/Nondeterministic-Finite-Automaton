@@ -21,6 +21,15 @@ class OperationClass{
         // void listt(Catalog& catalog);
         void start();
         void help();
-        void open(const char* name, Catalog& catalog, Automat* temp);
+        void open(const char* name, Catalog& catalog, Catalog& openedAutomats);
         void list(Catalog& catalog);
+        void close(const char* name, Catalog& openedAutomats);
+        void empty(const char* name, Catalog& openedAutomats);
+        void print(const char* name, Catalog& openedAutomats);
+        void save(const char* name, const char* fileName, Catalog& catalog);
+        void saveas(char* name, Catalog& openedAutomats, Catalog& catalog);
+        void deterministic(const char* name, Catalog& openedAutomats);
+        void recognize(const char* name, const char* word, Catalog& openedAutomats);
+        void unite(const char* name1, const char* name2, Catalog& openedAutomats, Catalog& catalog);
+        void concat(const char* name1, const char* name2, Catalog& openedAutomats, Catalog& catalog);
 };

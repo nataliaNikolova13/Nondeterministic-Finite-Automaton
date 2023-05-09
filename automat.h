@@ -30,6 +30,7 @@ class Automat{
         void printAutomat();
         void readAuthomatFromFile(const char* nameFile);
         void printAutomatInFile();
+        void printAutomatInFileByName(const char* nameFile);
         bool isStateInAutomat(const State& state);
         int positionofState(const State& state);
         bool isValid();

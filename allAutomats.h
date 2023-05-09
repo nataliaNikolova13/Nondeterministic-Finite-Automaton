@@ -17,6 +17,7 @@ class Catalog{
         Catalog& operator= (const Catalog& other);
         ~Catalog();
         void addAutomat(const Automat& automat);
+        void removeAutomat(const char* name);
         int getSize() const;
         const Automat* getAllAutomats() const;
         void list();
