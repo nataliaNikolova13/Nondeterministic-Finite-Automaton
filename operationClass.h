@@ -18,6 +18,9 @@ class OperationClass{
             return operationClass;
         }
 
-        void listt(Catalog& catalog);
+        // void listt(Catalog& catalog);
         void start();
+        void help();
+        void open(const char* name, Catalog& catalog, Automat* temp);
+        void list(Catalog& catalog);
 };

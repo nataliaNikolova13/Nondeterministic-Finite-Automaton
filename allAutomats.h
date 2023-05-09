@@ -22,5 +22,7 @@ class Catalog{
         void list();
         void printAutomatById(int id);
         int getId(const Automat& automat) const;
+        int getIdByName(const char* name) const;
+        Automat& concatByID(const char* name1, const char* name2);
         // void concatenate(const Automat& first, const Automat& second);
 };

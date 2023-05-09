@@ -320,6 +320,7 @@ void Automat::concatenate(const Automat& first, const Automat& second){
     this->size = first.getSize() + second.getSize();
 }
 
+
 void Automat::unite(const Automat& first, const Automat& second){
     State start("start", false);
     Prehod toFirst(start, State("nextToStart_F", false), epsilonPrehod);
@@ -390,6 +391,57 @@ bool Automat::isDeterministic(){
         }
     }
     return true;
+}
+
+void Automat::howManyWordsAreRead(int pos, int& b){
+    for(std::size_t i = 0; i < this->getSize(); i++){
+        if(this->adjMatrix[pos][i] != noPrehod){
+            if(this->allStates[i].isStateFinal()){
+                b++;
+                this->howManyWordsAreRead(i, b);
+            }
+            else{
+                this->howManyWordsAreRead(i, b);
+            }
+
+        }
+    }
+}
+
+bool Automat::isEmpty(){
+    int b = 0;
+    // det.howManyWordsAreRead(0, b);
+    // std::cout<<b<<std::endl;
+    this->howManyWordsAreRead(0, b);
+    if(b > 0){
+        return false;
+    }else{
+        true;
+    }
+    return true;
+}
+
+void Automat::isRecognised(const char* word, int& posInWord, int& posInAutomat){
+    // this->getFirstState();
+    for(int i = 0; i < this->size; i++){
+        if(this->adjMatrix[posInAutomat][i] == word[posInWord]){
+            posInWord++;
+            posInAutomat = i;
+            this->isRecognised(word, posInWord, posInAutomat);
+        }
+    }
+}
+
+bool Automat::isWordRecodnised(const char* word){
+    int posInWord = 0;
+    int posInAutomat = 0;
+    this->isRecognised(word, posInWord, posInAutomat);
+    // std::cout<<posInWord;
+    if(posInWord == strlen(word)){
+        return true;
+    }
+    return false;
+
 }
 
 /*

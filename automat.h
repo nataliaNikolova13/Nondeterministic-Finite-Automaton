@@ -41,5 +41,10 @@ class Automat{
         void concatenate(const Automat& first, const Automat& second);
         void unite(const Automat& first, const Automat& second);
         bool isDeterministic();
+        void howManyWordsAreRead(int pos, int& b);
+        bool isEmpty();
+        void isRecognised(const char* word, int& posInWord, int& posInAutomat);
+        bool isWordRecodnised(const char* word);
+        // bool isEmpty(int pos, bool b);
         //кои са финалните състояния?
 };

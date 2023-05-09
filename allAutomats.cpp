@@ -105,4 +105,25 @@ int Catalog::getId(const Automat& automat) const{
     return -1;
 }
 
+int Catalog::getIdByName(const char* name) const{
+    for(std::size_t i = 0; i < this->size; i++){
+        if(strcmp(this->allAutomats[i].getName(), name)){
+            return i;
+        }
+    }
+    return -1;
+
+}
+
+// Automat& Catalog::concatByID(const char* name1, const char* name2){
+//     Automat first;
+//     first = this->allAutomats[this->getIdByName(name1)];
+//     Automat second;
+//     second = this->allAutomats[this->getIdByName(name2)];
+//     Automat concat;
+//     concat.concatenate(first, second);
+
+//     return concat;
+// }
+
 

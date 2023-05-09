@@ -32,9 +32,13 @@ int main(){
     // catalog.addAutomat(fromFile);
     // catalog.list();
     // catalog.printAutomatById(2);
+
+    
+    // while
+
     OperationClass operationClass;
     operationClass.start();
-    // operationClass.list();
-    // allAutomats.spp operationClass.cpp
+    
+
     return 0;
 }
