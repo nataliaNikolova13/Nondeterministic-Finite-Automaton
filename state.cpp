@@ -15,6 +15,17 @@ State::State(const char* name, bool isFinal){
     this->isFinal = isFinal;
 }
 
+State::State(char _name, bool isFinal){
+    this->isFinal = isFinal;
+    this->name = new (std::nothrow) char[2];
+    if(!this->name){
+        throw "Memory problem - state";
+        return;
+    }
+    this->name[0] = _name;
+    this->name[1] = '\0';
+}
+
 void State::clear(){
     delete[] this->name;
 }

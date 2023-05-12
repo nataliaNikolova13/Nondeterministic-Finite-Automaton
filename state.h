@@ -11,6 +11,7 @@ class State{
     public:
         State();
         State(const char* name, bool isFinal);
+        State(char name, bool isFinal);
         State(const State& other);
         State& operator= (const State& other);
         const char* getNameState() const;

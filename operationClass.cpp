@@ -82,6 +82,12 @@ void OperationClass::start(){
     // std::cout<<std::boolalpha<<det.isWordRecodnised("aa");
     */
 
+    Automat autRegex;
+    // autRegex.regex("c(aa+bb)");
+    autRegex.regex("c(ab)*");
+    autRegex.printAutomat();
+    autRegex.printMatrix();
+
     Catalog catalog;
     Automat fromFile;
     fromFile.readAuthomatFromFile("automat.txt");

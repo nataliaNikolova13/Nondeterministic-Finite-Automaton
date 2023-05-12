@@ -472,6 +472,69 @@ bool Automat::isWordRecodnised(const char* word){
 
 }
 
+void Automat::regex(const char* regex){
+    this->size = 0;
+    this->name = new (std::nothrow) char[strlen(regex) + 1];
+    strcpy(this->name, regex);
+    bool opened = false;
+    bool plus = false;
+    int pos = 97;
+    State from(char(pos), false);
+    pos++;
+    // std::cout<<from.getNameState();
+    State to(char(pos), false);
+    pos++;
+    State saved = from;
+    State saved2 = from;
+    // int pos = 0;
+    for(int i = 0; i < strlen(regex); i++){
+        if(regex[i] == '('){
+            // std::cout<<"The was a bracket";
+            opened = true;
+            saved = from;
+            // pos = i;
+        }else if(regex[i] == ')'){
+            opened = false;
+            if(plus){
+                Prehod prehod(saved2, to, epsilonPrehod);
+                Prehod prehod2(from, to, epsilonPrehod);
+                this->addPrehod(prehod);
+                this->addPrehod(prehod2);
+                from = to;
+                to = State(char(pos), false);
+                pos++;
+            }else{
+                
+            }
+            
+            // saved2 = 
+        }else if(regex[i] == '*'){
+            Prehod prehod(from, saved, epsilonPrehod);
+            this->addPrehod(prehod);
+            // from = to;
+            
+        }else if(regex[i] == '+'){
+            plus = true;
+            saved2 = from;
+            from = saved;
+            
+            
+        }else{
+            Prehod prehod(from, to, regex[i]);
+            this->addPrehod(prehod);
+            from = to;
+            to = State(char(pos), false);
+            pos++;
+
+
+        }
+
+    }
+
+    //+final states
+
+}
+
 /*
         тоест, че има път от нач състояние до всяко друго
         bool isValid();

@@ -19,8 +19,8 @@ class Automat{
         void resize();
     public:
 
-        static bool isOpened;
-        static bool isSaved;
+        // static bool isOpened;
+        // static bool isSaved;
 
         Automat();
         Automat(const Automat& other);
@@ -46,6 +46,7 @@ class Automat{
         bool isEmpty();
         void isRecognised(const char* word, int& posInWord, int& posInAutomat);
         bool isWordRecodnised(const char* word);
+        void regex(const char* regex);
         // bool isEmpty(int pos, bool b);
         //кои са финалните състояния?
 };
