@@ -50,6 +50,10 @@ void Catalog::resize(){
 }
 
 void Catalog::addAutomat(const Automat& automat){
+    if(!this->isUnique(automat.getName())){
+        std::cout<<"This name already exists";
+        return;
+    }
     // std::cout<<"b";
     if(this->size == this->capacity){
         // std::cout<<"z";
@@ -130,4 +134,22 @@ int Catalog::getIdByName(const char* name) const{
 void Catalog::removeAutomat(const char* name){
     std::swap(this->allAutomats[this->getIdByName(name)], this->allAutomats[this->size-1]);
     --this->size;
+}
+
+bool Catalog::isUnique(const char* name){
+    for(std::size_t i = 0; i < this->size; i++){
+        if(strcmp(this->allAutomats[i].getName(), name ) == 0){
+            return false;
+        }
+    }
+    return true;
+}
+
+bool Catalog::automatExsists(const char* name){
+    for(std::size_t i = 0; i < this->size; i++){
+        if(strcmp(this->allAutomats[i].getName(), name ) == 0){
+            return true;
+        }
+    }
+    return false;
 }

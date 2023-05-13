@@ -82,11 +82,14 @@ void OperationClass::start(){
     // std::cout<<std::boolalpha<<det.isWordRecodnised("aa");
     */
 
-    Automat autRegex;
-    // autRegex.regex("c(aa+bb)");
-    autRegex.regex("c(ab)*");
-    autRegex.printAutomat();
-    autRegex.printMatrix();
+
+    // Automat autRegex;
+    // // autRegex.regex("c(aa+bb)");
+    // autRegex.regex("(ab+bb)*");
+    // autRegex.printAutomat();
+    // autRegex.printMatrix();
+    // std::cout<<std::boolalpha<<autRegex.isValid();
+    // autRegex.printAutomatInFileByName("regex.txt");
 
     Catalog catalog;
     Automat fromFile;
@@ -98,6 +101,12 @@ void OperationClass::start(){
     Automat notdet;
     notdet.readAuthomatFromFile("notdet.txt");
     catalog.addAutomat(notdet);
+
+    // std::cout<<std::boolalpha<<catalog.isUnique("det.txt");
+    // std::cout<<std::boolalpha<<catalog.isUnique("dert.txt");
+
+    // det.un();
+    // det.printAutomat();
 
     Catalog openedAutomats;
     // Automat temp[5];
@@ -129,7 +138,7 @@ void OperationClass::start(){
 
             this->print(name, openedAutomats);
 
-            std::cout<<"Enter a commandd: ";
+            std::cout<<"Enter a command: ";
             std::cin>>command;
         }else if(strcmp(command, "save_as") == 0){
             char name[100];
@@ -200,6 +209,22 @@ void OperationClass::start(){
 
             std::cout<<"Enter a command: ";
             std::cin>>command;
+        }else if(strcmp(command, "un") == 0){
+            char name[100];
+            std::cin>>name;
+
+            this->un(name, openedAutomats, catalog);
+
+            std::cout<<"Enter a command: ";
+            std::cin>>command;
+        }else if(strcmp(command, "regex") == 0){
+            char regex[100];
+            std::cin>>regex;
+
+            this->regex(catalog, regex);
+
+            std::cout<<"Enter a command: ";
+            std::cin>>command;
         }else{
             std::cout<<"Unknown command"<<std::endl;
 
@@ -215,15 +240,17 @@ void OperationClass::help(){
     std::cout<<"(1) To open an automat, enter \"open\" <the name of the automat>"<<std::endl;
     std::cout<<"(2) To close an automat without saving, enter \"close\" <the name of the automat>"<<std::endl;
     std::cout<<"(3) To save an automat, enter \"save\" <the name of the automat> <filename>"<<std::endl;
-    std::cout<<"(4) To save an automat in a new file, enter \" save as\" <the name of the automat>"<<std::endl;
+    std::cout<<"(4) To save an automat in a new file, enter \" save_as\" <the name of the automat>"<<std::endl;
     std::cout<<"(5) Exit this program, enter \"exit\""<<std::endl;
     std::cout<<"(6) To list all saved automats, enter \"list\""<<std::endl;
     std::cout<<"(7) To print an automat, enter \"print\" <the name of the automat>"<<std::endl;
     std::cout<<"(8) To concat two automats, enter \"concat\" <the name of the first automat> <the name of the second automat>"<<std::endl;
-    std::cout<<"(9) To unite two automats, enter \"unite\" <the name of the first automat> <the name of the second automat>"<<std::endl;
+    std::cout<<"(9) To unite two automats, enter \"union\" <the name of the first automat> <the name of the second automat>"<<std::endl;
     std::cout<<"(10) To check if a word is recognised by an automat, enter \"recognise\" <the name of the automat> <word>"<<std::endl;
     std::cout<<"(11) To check if the language of the automat is empty, enter \"empty\" <the name of the automat>"<<std::endl;
     std::cout<<"(12) To check if a word is deterministic, enter \"deterministic\" <the name of the automat>"<<std::endl;
+    std::cout<<"(13) To create an automat from regex, enter \"regex\" <regex>"<<std::endl;
+    std::cout<<"(13) To get the positive shell of an automat, enter \"un\" <the name of the automat>"<<std::endl;
 }
 
 void OperationClass::open(const char* name, Catalog& catalog, Catalog& openedAutomats){
@@ -231,6 +258,10 @@ void OperationClass::open(const char* name, Catalog& catalog, Catalog& openedAut
     //bool isOpened i isSaved в главната функция
 
     Automat temp;
+    if(!catalog.automatExsists(name)){
+        std::cout<<"There is no such automat, you should create it first"<<std::endl;
+        return;
+    }
     temp = catalog.getAllAutomats()[catalog.getIdByName(name)];
     // std::cout<<temp.getName()<<std::endl;
     for(int i = 0; i < openedAutomats.getSize(); i++){
@@ -260,6 +291,10 @@ void OperationClass::close(const char* name, Catalog& openedAutomats){
 }
 
 void OperationClass::save(const char* name, const char* fileName, Catalog& catalog){
+    if(!catalog.automatExsists(name)){
+        std::cout<<"There is no such automat, you should create it first"<<std::endl;
+        return;
+    }
     for(int i = 0; i < catalog.getSize(); i++){
         if(strcmp(catalog.getAllAutomats()[i].getName(), name) == 0){
             // catalog.removeAutomat(name);
@@ -396,4 +431,25 @@ void OperationClass::concat(const char* name1, const char* name2, Catalog& opene
         return;
     }
     return;
+}
+
+void OperationClass::un(const char* name, Catalog& openedAutomats, Catalog& catalog){
+    Automat temp;
+    for(int i = 0; i < openedAutomats.getSize(); i++){
+        if(strcmp(openedAutomats.getAllAutomats()[i].getName(), name) == 0){
+            temp = openedAutomats.getAllAutomats()[i];
+            temp.un();
+            temp.printAutomat();
+            return;
+        }
+    }
+    std::cout<<"Automat hasn't been opened"<<std::endl;
+    return;    
+}
+
+void OperationClass::regex(Catalog& catalog, const char* regex){
+    Automat temp;
+    temp.regex(regex);
+    catalog.addAutomat(temp);
+
 }

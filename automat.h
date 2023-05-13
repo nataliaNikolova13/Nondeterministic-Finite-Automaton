@@ -33,10 +33,11 @@ class Automat{
         void printAutomatInFileByName(const char* nameFile);
         bool isStateInAutomat(const State& state);
         int positionofState(const State& state);
-        bool isValid();
+        // void helperValid(bool* &arr, int &pos);
+        // bool isValid();
         void printMatrix();
         State& getFirstState() const;
-        char* getName() const;
+        const char* getName() const;
         // int getId() const;
         int getSize() const;
         void concatenate(const Automat& first, const Automat& second);
@@ -47,6 +48,7 @@ class Automat{
         void isRecognised(const char* word, int& posInWord, int& posInAutomat);
         bool isWordRecodnised(const char* word);
         void regex(const char* regex);
+        void un();
         // bool isEmpty(int pos, bool b);
         //кои са финалните състояния?
 };

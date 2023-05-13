@@ -32,4 +32,6 @@ class OperationClass{
         void recognize(const char* name, const char* word, Catalog& openedAutomats);
         void unite(const char* name1, const char* name2, Catalog& openedAutomats, Catalog& catalog);
         void concat(const char* name1, const char* name2, Catalog& openedAutomats, Catalog& catalog);
+        void un(const char* name, Catalog& openedAutomats, Catalog& catalog);
+        void regex(Catalog& catalog, const char* regex);
 };

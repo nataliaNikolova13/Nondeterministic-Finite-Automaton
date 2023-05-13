@@ -1,0 +1,8 @@
+a => b with a
+a => d with b
+b => c with b
+c => f with -
+d => e with b
+e => f with -
+f => a with -
+FinalStates: f 

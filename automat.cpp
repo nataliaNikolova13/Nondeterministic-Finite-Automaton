@@ -53,7 +53,7 @@ Automat::~Automat(){
     delete[] this->name;
 }
 
-char* Automat::getName() const{
+const char* Automat::getName() const{
     // std::cout<<"x";
     return this->name;
 }
@@ -474,8 +474,9 @@ bool Automat::isWordRecodnised(const char* word){
 
 void Automat::regex(const char* regex){
     this->size = 0;
-    this->name = new (std::nothrow) char[strlen(regex) + 1];
+    this->name = new (std::nothrow) char[strlen(regex) + 5];
     strcpy(this->name, regex);
+    strcat(this->name, ".txt");
     bool opened = false;
     bool plus = false;
     int pos = 97;
@@ -490,6 +491,10 @@ void Automat::regex(const char* regex){
     for(int i = 0; i < strlen(regex); i++){
         if(regex[i] == '('){
             // std::cout<<"The was a bracket";
+            if(opened == true){
+                std::cout<<"Already opend";
+                return;
+            }
             opened = true;
             saved = from;
             // pos = i;
@@ -530,15 +535,15 @@ void Automat::regex(const char* regex){
         }
 
     }
-
-    //+final states
+    this->allStates[getSize()-1].makeFinal();
 
 }
 
-/*
-        тоест, че има път от нач състояние до всяко друго
-        bool isValid();
-        void printAutomat();
-        void readAuthomatFromFile();
-        void printAutomatInFile();
-*/
+void Automat::un(){
+    for(int i = 0; i < this->getSize(); i++){
+        if(this->allStates[i].isStateFinal()){
+            Prehod pr(this->allStates[i], this->allStates[0], epsilonPrehod);
+            this->addPrehod(pr);
+        }
+    }
+}
