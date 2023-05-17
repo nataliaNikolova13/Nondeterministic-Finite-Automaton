@@ -54,21 +54,12 @@ void Catalog::addAutomat(const Automat& automat){
         std::cout<<"This name already exists";
         return;
     }
-    // std::cout<<"b";
     if(this->size == this->capacity){
-        // std::cout<<"z";
         this->resize();
     }
-    // std::cout<<this->size;
-    
    
     this->allAutomats[this->size] = automat;
-    // std::cout<<this->size;
     this->size = this->size + 1;
-    // std::cout<<this->size;
-    // std::cout<<"xxxxx";
-    // this->size++;
-    
 }
 
 int Catalog::getSize() const{
@@ -76,26 +67,16 @@ int Catalog::getSize() const{
 }
 
 const Automat* Catalog::getAllAutomats() const{
-    // std::cout<<"yyyy";
     return this->allAutomats;
 }
 
 void Catalog::list(){
-    // std::cout<<this->size;
     for(std::size_t i = 0; i < this->size; i++){
-        // std::cout<<"a";
         std::cout<<i+1<<" - "<<this->getAllAutomats()[i].getName()<<std::endl;
-        // std::cout<<"b";
     }
 }
 
 void Catalog::printAutomatById(int id){
-    // for(std::size_t i = 0; i < this->size; i++){
-    //     if(this->allAutomats[i].getId() == id){
-    //         this->allAutomats[i].printAutomat();
-    //         this->allAutomats[i].printMatrix();
-    //     }
-    // }
     this->allAutomats[id].printAutomat();
     this->allAutomats[id].printMatrix();
 }
@@ -118,18 +99,6 @@ int Catalog::getIdByName(const char* name) const{
     return -1;
 
 }
-
-// Automat& Catalog::concatByID(const char* name1, const char* name2){
-//     Automat first;
-//     first = this->allAutomats[this->getIdByName(name1)];
-//     Automat second;
-//     second = this->allAutomats[this->getIdByName(name2)];
-//     Automat concat;
-//     concat.concatenate(first, second);
-
-//     return concat;
-// }
-
 
 void Catalog::removeAutomat(const char* name){
     std::swap(this->allAutomats[this->getIdByName(name)], this->allAutomats[this->size-1]);

@@ -12,31 +12,25 @@ void Automat::clear(){
 }
 
 void Automat::copy(const Automat& other){
-    // std::cout<<"a";
     this->allStates = new (std::nothrow) State[other.size];
     for(unsigned int i = 0; i < other.size; i++){
         this->allStates[i] = other.allStates[i];
     }
-    // std::cout<<"b";
     this->adjMatrix = new (std::nothrow) char*[other.size];
     for(unsigned int j = 0; j < other.size; j++){
         this->adjMatrix[j] = new (std::nothrow) char[other.size];
     }
-    // std::cout<<"c";
 
     for(unsigned int i = 0; i < other.size; i++){
         for(unsigned int j = 0; j < other.size; j++){
             this->adjMatrix[i][j] = other.adjMatrix[i][j];
         }
     }
-    // std::cout<<"d";
 
     this->size = other.size;
-    // std::cout<<"e";
 
     if(other.name == nullptr){
         this->name = nullptr;
-        // std::cout<<"fgggg";
     }else{
         this->name = new (std::nothrow) char[strlen(other.name) + 1];
         if(!this->name){
@@ -54,14 +48,8 @@ Automat::~Automat(){
 }
 
 const char* Automat::getName() const{
-    // std::cout<<"x";
     return this->name;
 }
-
-// int Automat::getId() const{
-//     // std::cout<<"id";
-//     return this->id;
-// }
 
 void Automat::resize(){
     if(this->size==0){
@@ -82,7 +70,6 @@ void Automat::resize(){
         for(unsigned int j = 0; j < this->size + 1; j++){
             if(i ==this->size || j == this->size){
                 tempMatrix[i][j] = noPrehod;
-                // std::cout<<"u";
             }else{
                 tempMatrix[i][j] = this->adjMatrix[i][j];
             }
@@ -100,27 +87,19 @@ Automat::Automat(){
     this->allStates = nullptr;
     this->adjMatrix = nullptr;
     this->size = 0;
-    // this->id = idsTaken;
-    // idsTaken++;
     this->name = new (std::nothrow) char[17];
     strcpy(this->name, "Unknown_name.txt");
 }
 
 Automat::Automat(const Automat& other){
     this->copy(other);
-    // this->id = idsTaken;
-    // idsTaken++;
 }
 
 Automat& Automat::operator= (const Automat& other){
-    // std::cout<<"copy";
     if(this!=&other){
         this->clear();
-        // std::cout<<"clear";
         delete[] this->name;
-        // std::cout<<"name";
         this->copy(other);
-        // std::cout<<"ggrrtg";
     }
     return *this;
 }
@@ -188,7 +167,6 @@ void Automat::printAutomat(){
             if(this->adjMatrix[i][j] != noPrehod){
                 Prehod pr(this->allStates[i], this->allStates[j], this->adjMatrix[i][j]);
                 pr.printPrehod();
-                // std::cout<<std::endl;
             }
         }
     }
@@ -217,10 +195,8 @@ void Automat::readAuthomatFromFile(const char* nameFile){
     State to;
     while(!file.eof()){
         file >> temp;
-        // std::cout<<temp<<std::endl;
         if(temp[0] == 'F' && temp[1] == 'i' && temp[2] == 'n'){
             counter = -1;
-            // std::cout<<"m";
         }
         else if(counter == 0){
             from = State(temp, false);
@@ -232,9 +208,7 @@ void Automat::readAuthomatFromFile(const char* nameFile){
             Prehod prehod (from, to, temp[0]);
             this->addPrehod(prehod);
             counter = 0;
-            // std::cout<<"f";
         }else if(counter == -1){
-            // std::cout<<"l";
             int pos = this->positionofState(State(temp, true));
             this->allStates[pos].makeFinal();
         }
@@ -255,13 +229,10 @@ void Automat::printAutomatInFile(){
         throw "Memory problem";
         return;
     }
-    // file<<
     for(unsigned int i = 0; i < this->size; i++){
         for(unsigned int j = 0; j < this->size; j++){
             if(this->adjMatrix[i][j] != noPrehod){
                 Prehod pr(this->allStates[i], this->allStates[j], this->adjMatrix[i][j]);
-                // pr.printPrehod();
-                // std::cout<<std::endl;
                 file<<pr.getFrom().getNameState()<<" => "<<pr.getTo().getNameState()<<" with "<<pr.getLetter()<<"\n";
             }
         }
@@ -288,8 +259,6 @@ void Automat::printAutomatInFileByName(const char* nameFile){
         for(unsigned int j = 0; j < this->size; j++){
             if(this->adjMatrix[i][j] != noPrehod){
                 Prehod pr(this->allStates[i], this->allStates[j], this->adjMatrix[i][j]);
-                // pr.printPrehod();
-                // std::cout<<std::endl;
                 file<<pr.getFrom().getNameState()<<" => "<<pr.getTo().getNameState()<<" with "<<pr.getLetter()<<"\n";
             }
         }
@@ -327,14 +296,11 @@ void Automat::concatenate(const Automat& first, const Automat& second){
     }
     for(int i = 0; i < first.getSize(); i++){
         if(first.allStates[i].isStateFinal()){
-            // std::cout<<i<<std::endl;
             Prehod temp(first.allStates[i], second.getFirstState(), epsilonPrehod);
             this-> addPrehod(temp);
             first.allStates[i].makeNotFinal();
         }
     }
-    // this->id = idsTaken;
-    // idsTaken++;
     char buffer[100];
     strcpy(buffer, "concat");
     strcat(buffer, "_");
@@ -370,8 +336,6 @@ void Automat::unite(const Automat& first, const Automat& second){
 
     Prehod toSecond(start, State("nextToStart_S", false), epsilonPrehod);
     this->addPrehod(toSecond);
-    // this->printMatrix();
-    // std::cout<<this->size<<std::endl;
     int s = this->size;
 
     for(int i = 0; i < second.getSize(); i++){
@@ -438,8 +402,6 @@ void Automat::howManyWordsAreRead(int pos, int& b){
 
 bool Automat::isEmpty(){
     int b = 0;
-    // det.howManyWordsAreRead(0, b);
-    // std::cout<<b<<std::endl;
     this->howManyWordsAreRead(0, b);
     if(b > 0){
         return false;
@@ -450,7 +412,6 @@ bool Automat::isEmpty(){
 }
 
 void Automat::isRecognised(const char* word, int& posInWord, int& posInAutomat){
-    // this->getFirstState();
     for(int i = 0; i < this->size; i++){
         if(this->adjMatrix[posInAutomat][i] == word[posInWord]){
             posInWord++;
@@ -464,7 +425,6 @@ bool Automat::isWordRecodnised(const char* word){
     int posInWord = 0;
     int posInAutomat = 0;
     this->isRecognised(word, posInWord, posInAutomat);
-    // std::cout<<posInWord;
     if(posInWord == strlen(word) && this->allStates[posInAutomat].isStateFinal() == true){
         return true;
     }
@@ -472,7 +432,7 @@ bool Automat::isWordRecodnised(const char* word){
 
 }
 
-void Automat::regex(const char* regex){
+bool Automat::regex(const char* regex){
     this->size = 0;
     this->name = new (std::nothrow) char[strlen(regex) + 5];
     strcpy(this->name, regex);
@@ -482,22 +442,18 @@ void Automat::regex(const char* regex){
     int pos = 97;
     State from(char(pos), false);
     pos++;
-    // std::cout<<from.getNameState();
     State to(char(pos), false);
     pos++;
     State saved = from;
     State saved2 = from;
-    // int pos = 0;
     for(int i = 0; i < strlen(regex); i++){
         if(regex[i] == '('){
-            // std::cout<<"The was a bracket";
             if(opened == true){
-                std::cout<<"Already opend";
-                return;
+                std::cout<<"Error - brackets not closed"<<std::endl;
+                return false;
             }
             opened = true;
             saved = from;
-            // pos = i;
         }else if(regex[i] == ')'){
             opened = false;
             if(plus){
@@ -512,13 +468,15 @@ void Automat::regex(const char* regex){
                 
             }
             
-            // saved2 = 
         }else if(regex[i] == '*'){
             Prehod prehod(from, saved, epsilonPrehod);
             this->addPrehod(prehod);
-            // from = to;
             
         }else if(regex[i] == '+'){
+            if(opened==false){
+                std::cout<<"You have to put + operation in brackets"<<std::endl;
+                return false;
+            }
             plus = true;
             saved2 = from;
             from = saved;
@@ -536,7 +494,7 @@ void Automat::regex(const char* regex){
 
     }
     this->allStates[getSize()-1].makeFinal();
-
+    return true;
 }
 
 void Automat::un(){

@@ -1,95 +1,6 @@
 #include "operationClass.h"
 
-// OperationClass::OperationClass(){
-//     this->catalog = catalog;
-// }
-
-// void OperationClass::list(){
-    
-//     for(std::size_t i = 0; i < this->catalog.getSize(); i++){
-//         std::cout<<"a";
-//         std::cout<<getInstance().catalog.getAllAutomats()[i].getId()<<" - "<<getInstance().catalog.getAllAutomats()[i].getName()<<std::endl;
-//     }
-// }
-
 void OperationClass::start(){
-    /*
-    State state ("five", false);
-    State st ("six", false);
-    State sta ("seven", true);
-    State four ("eight", true);
-    // State nine ("nine", false);
-    // state.printState();
-    Prehod prehod(state, st, 'a');
-    Prehod pr(state, sta, 'b');
-    Prehod three(four, st, 'b');
-    Prehod fourr(state, four, 'b');
-    // prehod.printPrehod();
-    Automat automat;
-    // std::cout<<automat.getId();
-    automat.addPrehod(prehod);
-    automat.addPrehod(pr);
-    // std::cout<<automat.getId();
-    automat.addPrehod(three);
-    automat.addPrehod(fourr);
-    // automat.printAutomat();
-    // automat.printMatrix();
-    automat.printAutomatInFile();
-
-    Automat fromFile;
-    fromFile.readAuthomatFromFile("automat.txt");
-    // fromFile.printMatrix();
-
-    Catalog catalog;
-    catalog.addAutomat(automat);
-    catalog.addAutomat(fromFile);
-    
-    // catalog.printAutomatById(2);
-    // std::cout<<"-----"<<std::endl;
-    // catalog.printAutomatById(1);
-
-    // Automat concat;
-    // concat.concatenate(fromFile, automat);
-    
-    // catalog.list();
-    // concat.printAutomat();
-    // concat.printMatrix();
-
-    Automat un;
-    un.unite(fromFile, automat);
-    // un.printMatrix();
-    catalog.addAutomat(un);
-
-    Automat det;
-    det.readAuthomatFromFile("det.txt");
-    // det.printMatrix();
-    // std::cout<<std::boolalpha<<det.isDeterministic();
-    // std::cout<<std::boolalpha<<det.isEmpty();
-    // int b = 0;
-    // det.howManyWordsAreRead(0, b);
-    // std::cout<<b<<std::endl;
-    catalog.addAutomat(det);
-
-    Automat notdet;
-    // std::cout<<std::boolalpha<<notdet.isEmpty();
-    notdet.readAuthomatFromFile("notdet.txt");
-    // std::cout<<std::boolalpha<<notdet.isDeterministic();
-    catalog.addAutomat(notdet);
-
-
-    catalog.list();
-    
-    // std::cout<<std::boolalpha<<det.isWordRecodnised("aa");
-    */
-
-
-    // Automat autRegex;
-    // // autRegex.regex("c(aa+bb)");
-    // autRegex.regex("(ab+bb)*");
-    // autRegex.printAutomat();
-    // autRegex.printMatrix();
-    // std::cout<<std::boolalpha<<autRegex.isValid();
-    // autRegex.printAutomatInFileByName("regex.txt");
 
     Catalog catalog;
     Automat fromFile;
@@ -101,15 +12,8 @@ void OperationClass::start(){
     Automat notdet;
     notdet.readAuthomatFromFile("notdet.txt");
     catalog.addAutomat(notdet);
-
-    // std::cout<<std::boolalpha<<catalog.isUnique("det.txt");
-    // std::cout<<std::boolalpha<<catalog.isUnique("dert.txt");
-
-    // det.un();
-    // det.printAutomat();
 
     Catalog openedAutomats;
-    // Automat temp[5];
 
     char command[50];
     std::cout<<"Enter a command: ";
@@ -129,6 +33,11 @@ void OperationClass::start(){
             std::cin>>command;
         }else if(strcmp(command, "list") == 0){
             this->list(catalog);
+
+            std::cout<<"Enter a command: ";
+            std::cin>>command;
+        }else if(strcmp(command, "listOpened") == 0){
+            this->listOpened(openedAutomats);
 
             std::cout<<"Enter a command: ";
             std::cin>>command;
@@ -254,8 +163,6 @@ void OperationClass::help(){
 }
 
 void OperationClass::open(const char* name, Catalog& catalog, Catalog& openedAutomats){
-    //to add proverka dali automat e otvoren
-    //bool isOpened i isSaved в главната функция
 
     Automat temp;
     if(!catalog.automatExsists(name)){
@@ -263,7 +170,6 @@ void OperationClass::open(const char* name, Catalog& catalog, Catalog& openedAut
         return;
     }
     temp = catalog.getAllAutomats()[catalog.getIdByName(name)];
-    // std::cout<<temp.getName()<<std::endl;
     for(int i = 0; i < openedAutomats.getSize(); i++){
         if(strcmp(openedAutomats.getAllAutomats()[i].getName(), name) == 0){
             std::cout<<"Automat is already opened"<<std::endl;
@@ -276,6 +182,10 @@ void OperationClass::open(const char* name, Catalog& catalog, Catalog& openedAut
 
 void OperationClass::list(Catalog& catalog){
     catalog.list();
+}
+
+void OperationClass::listOpened(Catalog& openedAutomats){
+    openedAutomats.list();
 }
 
 void OperationClass::close(const char* name, Catalog& openedAutomats){
@@ -297,7 +207,6 @@ void OperationClass::save(const char* name, const char* fileName, Catalog& catal
     }
     for(int i = 0; i < catalog.getSize(); i++){
         if(strcmp(catalog.getAllAutomats()[i].getName(), name) == 0){
-            // catalog.removeAutomat(name);
             Automat temp;
             temp = catalog.getAllAutomats()[i];
             temp.printAutomatInFileByName(fileName);
@@ -314,7 +223,6 @@ void OperationClass::save(const char* name, const char* fileName, Catalog& catal
 void OperationClass::saveas(char* name, Catalog& openedAutomats, Catalog& catalog){
     for(int i = 0; i < openedAutomats.getSize(); i++){
         if(strcmp(openedAutomats.getAllAutomats()[i].getName(), name) == 0){
-            // catalog.removeAutomat(name);
             Automat temp;
             temp = openedAutomats.getAllAutomats()[i];
             strcat(name, "(2)");
@@ -335,7 +243,6 @@ void OperationClass::print(const char* name, Catalog& openedAutomats){
             Automat temp;
             temp = openedAutomats.getAllAutomats()[i];
             temp.printAutomat();
-            // openedAutomats.removeAutomat(name);
             std::cout<<"Automat is printed"<<std::endl;
             return;
         }
@@ -449,7 +356,11 @@ void OperationClass::un(const char* name, Catalog& openedAutomats, Catalog& cata
 
 void OperationClass::regex(Catalog& catalog, const char* regex){
     Automat temp;
-    temp.regex(regex);
-    catalog.addAutomat(temp);
+    if(temp.regex(regex) == true){
+        catalog.addAutomat(temp);
+    }else{
+        std::cout<<"Not a valid regex, automat not added"<<std::endl;
+    }
+    
 
 }

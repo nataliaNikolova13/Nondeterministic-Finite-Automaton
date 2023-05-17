@@ -4,11 +4,8 @@
 #include <cstring>
 #include <iostream>
 
-// static unsigned int idsTaken = -1;
-
 class Automat{
     private:
-        // int id;
         State* allStates;
         char** adjMatrix;
         unsigned int size;
@@ -18,9 +15,6 @@ class Automat{
         void copy(const Automat& other);
         void resize();
     public:
-
-        // static bool isOpened;
-        // static bool isSaved;
 
         Automat();
         Automat(const Automat& other);
@@ -33,12 +27,9 @@ class Automat{
         void printAutomatInFileByName(const char* nameFile);
         bool isStateInAutomat(const State& state);
         int positionofState(const State& state);
-        // void helperValid(bool* &arr, int &pos);
-        // bool isValid();
         void printMatrix();
         State& getFirstState() const;
         const char* getName() const;
-        // int getId() const;
         int getSize() const;
         void concatenate(const Automat& first, const Automat& second);
         void unite(const Automat& first, const Automat& second);
@@ -47,8 +38,6 @@ class Automat{
         bool isEmpty();
         void isRecognised(const char* word, int& posInWord, int& posInAutomat);
         bool isWordRecodnised(const char* word);
-        void regex(const char* regex);
+        bool regex(const char* regex);
         void un();
-        // bool isEmpty(int pos, bool b);
-        //кои са финалните състояния?
 };

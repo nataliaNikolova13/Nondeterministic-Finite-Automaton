@@ -75,4 +75,3 @@ void State::makeFinal(){
 void State::makeNotFinal(){
     this->isFinal = false;
 }
-//void State::printStateInFile();

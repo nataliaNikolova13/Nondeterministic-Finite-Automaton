@@ -4,9 +4,7 @@
 
 class OperationClass{
     private:
-        // Catalog catalog;
-        // OperationClass(){};
-        // void clear();
+    
     public:
         OperationClass(){};
         OperationClass(const OperationClass& operationClass) = delete;
@@ -18,11 +16,11 @@ class OperationClass{
             return operationClass;
         }
 
-        // void listt(Catalog& catalog);
         void start();
         void help();
         void open(const char* name, Catalog& catalog, Catalog& openedAutomats);
         void list(Catalog& catalog);
+        void listOpened(Catalog& openedAutomats);
         void close(const char* name, Catalog& openedAutomats);
         void empty(const char* name, Catalog& openedAutomats);
         void print(const char* name, Catalog& openedAutomats);
