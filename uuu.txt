@@ -1,0 +1,4 @@
+a => b with u
+b => c with u
+c => d with u
+FinalStates: d 
